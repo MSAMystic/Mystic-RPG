@@ -1,0 +1,27 @@
+_G.ON = true
+
+local Distance = 12
+
+while _G.ON and task.wait() do
+
+    for i,v in pairs(workspace.AllMobs:GetDescendants()) do
+
+        for i,b in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+
+            if b.ClassName == "Tool" then
+
+                if v.Name ~= game.Players.LocalPlayer.Name and v:FindFirstChildOfClass("Humanoid") and v.Enemy.Health > 0 and v.PrimaryPart ~= nil and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.PrimaryPart.Position).Magnitude < Distance then
+
+                    game:GetService("ReplicatedStorage"):WaitForChild("GameRemotes"):WaitForChild("DamageEvent"):FireServer(v.HumanoidRootPart, v.Enemy, b.Name)
+
+                    task.wait()
+
+                end
+
+            end
+
+        end
+
+    end
+
+end
